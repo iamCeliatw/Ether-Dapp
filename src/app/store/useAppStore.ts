@@ -10,16 +10,20 @@ interface AppState {
   setIsWalletConnected: (isWalletConnected: boolean) => void
   initializeChain: () => Promise<void>
 }
-
+// 定義 StorageValue 類型
+type StorageValue<T> = {
+  state: T // Zustand 的狀態類型
+  version: number // Persist 的版本號
+}
 const customStorage = {
-  getItem: (name: string) => {
+  getItem: (name: string): StorageValue<AppState> | null => {
     const value = sessionStorage.getItem(name)
-    return value ? JSON.parse(value) : null // 確保返回解析後的對象或 null
+    return value ? JSON.parse(value) : null
   },
-  setItem: (name: string, value: string) => {
-    sessionStorage.setItem(name, JSON.stringify(value)) // 確保存儲為 JSON 字符串
+  setItem: (name: string, value: StorageValue<AppState>): void => {
+    sessionStorage.setItem(name, JSON.stringify(value))
   },
-  removeItem: (name: string) => {
+  removeItem: (name: string): void => {
     sessionStorage.removeItem(name)
   },
 }
