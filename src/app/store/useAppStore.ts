@@ -16,7 +16,7 @@ const customStorage = {
     const value = sessionStorage.getItem(name)
     return value ? JSON.parse(value) : null // 確保返回解析後的對象或 null
   },
-  setItem: (name: string, value: any) => {
+  setItem: (name: string, value: string) => {
     sessionStorage.setItem(name, JSON.stringify(value)) // 確保存儲為 JSON 字符串
   },
   removeItem: (name: string) => {
