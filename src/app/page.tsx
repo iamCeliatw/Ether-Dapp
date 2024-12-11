@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import ConnectWallet from '../app/components/ConnectWallet'
 
 export default function Home() {
