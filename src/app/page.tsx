@@ -1,7 +1,22 @@
-export default function Home() {
+// app/page.tsx
+'use client'
+
+import React from 'react'
+import ConnectWallet from './components/ConnectWallet'
+import WalletBalance from './components/WalletBalance'
+const HomePage: React.FC = () => {
+  const [account, setAccount] = React.useState<string | null>(null)
+
+  const handleAccountChange = (newAccount: string | null) => {
+    setAccount(newAccount)
+  }
+
   return (
-    <div>
-      <h1>Hello, Next.js 13!</h1>
+    <div className="p-5">
+      <ConnectWallet onAccountChange={handleAccountChange} />
+      {account && <WalletBalance account={account || ''} />}
     </div>
   )
 }
+
+export default HomePage
