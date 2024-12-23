@@ -2,8 +2,8 @@
 'use client'
 
 import React from 'react'
-import ConnectWallet from './components/ConnectWallet'
-import WalletBalance from './components/WalletBalance'
+import ConnectWallet from './components/wallect/ConnectWallet'
+import WalletBalance from './components/wallect/WalletBalance'
 const HomePage: React.FC = () => {
   const [account, setAccount] = React.useState<string | null>(null)
 

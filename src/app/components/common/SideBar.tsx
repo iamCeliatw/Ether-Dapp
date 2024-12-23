@@ -1,7 +1,11 @@
+'use client'
+
 import Link from 'next/link'
 import { FaWallet, FaUser, FaChartLine, FaCog } from 'react-icons/fa'
 import { AiOutlineLogout } from 'react-icons/ai'
-import { GrBitcoin } from 'react-icons/gr'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 const menuItems = [
   {
     icon: FaWallet,
@@ -10,8 +14,8 @@ const menuItems = [
   },
   {
     icon: FaUser,
-    title: 'Account',
-    href: '/account',
+    title: 'Ethereum Price',
+    href: '/price',
   },
   {
     icon: FaChartLine,
@@ -25,11 +29,23 @@ const menuItems = [
   },
 ]
 const Sidebar = () => {
+  const pathname = usePathname()
+  useEffect(() => {
+    setSelectedItem(pathname)
+  }, [pathname])
+  const [selectedItem, setSelectedItem] = useState<string>('')
+
   return (
     <div className="h-full min-h-screen w-[300px] bg-background text-[#ECEAE7] flex flex-col justify-between p-5">
       {/* Logo */}
       <div className="mb-8 w-12 justify-center bg-[#262626] items-center rounded-full flex h-12">
-        <img className="w-1/3" src="/logo.svg" alt="" />
+        <Image
+          className="w-1/3"
+          width={40}
+          height={40}
+          src="/logo.svg"
+          alt=""
+        />
       </div>
 
       {/* Menu Items */}
@@ -38,9 +54,20 @@ const Sidebar = () => {
           <Link
             key={item.href}
             href={item.href}
-            className="group flex items-center space-x-3 hover:bg-[#262626] hover:text-[#FFFFFF] rounded-md py-4 px-8 opacity-30 hover:opacity-100"
+            onClick={() => setSelectedItem(item.href)}
+            className={`group flex items-center space-x-3 rounded-md py-4 px-8 opacity-30 hover:opacity-100 ${
+              selectedItem === item.href
+                ? 'bg-[#262626] text-[#FFFFFF] opacity-100'
+                : 'hover:bg-[#262626] hover:text-[#FFFFFF]'
+            }`}
           >
-            <item.icon className="text-lg group-hover:text-[#F0D85A]" />
+            <item.icon
+              className={`text-lg ${
+                selectedItem === item.href
+                  ? 'text-[#F0D85A]'
+                  : 'text-[#FFFFFF] group-hover:text-[#F0D85A]'
+              }`}
+            />
             <span className="text-lg">{item.title}</span>
           </Link>
         ))}

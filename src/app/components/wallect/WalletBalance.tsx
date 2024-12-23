@@ -1,7 +1,7 @@
 // components/WalletBalance.tsx
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { ethers } from 'ethers'
 
 interface WalletBalanceProps {
@@ -11,14 +11,14 @@ interface WalletBalanceProps {
 const WalletBalance: React.FC<WalletBalanceProps> = ({ account }) => {
   const [balance, setBalance] = useState<string>('')
 
-  const getBalance = async () => {
+  const getBalance = useCallback(async () => {
     try {
-      if (!(window as any).ethereum) {
+      if (!window.ethereum) {
         console.log('請安裝 MetaMask!')
         return
       }
 
-      const provider = new ethers.BrowserProvider((window as any).ethereum)
+      const provider = new ethers.BrowserProvider(window.ethereum)
       const balanceBigNumber = await provider.getBalance(account)
       const balanceInEth = ethers.formatEther(balanceBigNumber)
       console.log('餘額:', balanceInEth, balanceBigNumber)
@@ -26,13 +26,13 @@ const WalletBalance: React.FC<WalletBalanceProps> = ({ account }) => {
     } catch (error) {
       console.log(error)
     }
-  }
+  }, [account])
 
   useEffect(() => {
     if (account) {
       getBalance()
     }
-  }, [account])
+  }, [account, getBalance])
 
   return (
     <div className="mt-4">

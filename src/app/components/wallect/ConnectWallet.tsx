@@ -1,8 +1,7 @@
 // components/ConnectWallet.tsx
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { ethers } from 'ethers'
+import React, { useState, useEffect, useCallback } from 'react'
 
 interface ConnectWalletProps {
   onAccountChange: (account: string | null) => void
@@ -12,8 +11,8 @@ const ConnectWallet: React.FC<ConnectWalletProps> = ({ onAccountChange }) => {
   const [currentAccount, setCurrentAccount] = useState<string | null>(null)
 
   // 檢查錢包是否已連接
-  const checkIfWalletIsConnected = async () => {
-    const { ethereum } = window as any
+  const checkIfWalletIsConnected = useCallback(async () => {
+    const { ethereum } = window
 
     if (!ethereum) {
       console.log('請安裝 MetaMask!')
@@ -30,12 +29,12 @@ const ConnectWallet: React.FC<ConnectWalletProps> = ({ onAccountChange }) => {
     } else {
       console.log('尚未連接錢包')
     }
-  }
+  }, [onAccountChange])
 
   // 連接錢包
   const connectWallet = async () => {
     try {
-      const { ethereum } = window as any
+      const { ethereum } = window
 
       if (!ethereum) {
         alert('請安裝 MetaMask!')
@@ -61,7 +60,7 @@ const ConnectWallet: React.FC<ConnectWalletProps> = ({ onAccountChange }) => {
     checkIfWalletIsConnected()
 
     // 監聽帳戶變更
-    const { ethereum } = window as any
+    const { ethereum } = window
     if (ethereum) {
       const handleAccountsChanged = (accounts: string[]) => {
         if (accounts.length > 0) {
@@ -82,7 +81,7 @@ const ConnectWallet: React.FC<ConnectWalletProps> = ({ onAccountChange }) => {
         }
       }
     }
-  }, [])
+  }, [checkIfWalletIsConnected, onAccountChange])
 
   return (
     <div>
