@@ -55,7 +55,7 @@ const Sidebar = () => {
             key={item.href}
             href={item.href}
             onClick={() => setSelectedItem(item.href)}
-            className={`group flex items-center space-x-3 rounded-md py-4 px-8 opacity-30 hover:opacity-100 ${
+            className={`group flex items-center space-x-3 rounded-md py-4 px-8 hover:opacity-100 ${
               selectedItem === item.href
                 ? 'bg-[#262626] text-[#FFFFFF] opacity-100'
                 : 'hover:bg-[#262626] hover:text-[#FFFFFF]'

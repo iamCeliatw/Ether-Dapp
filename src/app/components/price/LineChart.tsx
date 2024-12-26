@@ -1,5 +1,6 @@
 'use client'
-import React from 'react'
+
+import React, { useEffect, useState } from 'react'
 import {
   LineChart,
   Line,
@@ -10,30 +11,65 @@ import {
   Legend,
 } from 'recharts'
 
-const data = [
-  { name: 'Jan', price: 1200 },
-  { name: 'Feb', price: 1250 },
-  { name: 'Mar', price: 1300 },
-  { name: 'Apr', price: 1280 },
-  { name: 'May', price: 1290 },
-  { name: 'Jun', price: 1320 },
-]
+interface ChartData {
+  date: string
+  price: number
+}
 
 const SimpleLineChart = () => {
+  const [data, setData] = useState<ChartData[]>([])
+  const [loading, setLoading] = useState(true)
+
+  const fetchDuneData = async () => {
+    try {
+      setLoading(true)
+
+      const queryId = '4480458'
+      const apiUrl = `/api/dune?queryId=${queryId}&limit=1000`
+
+      const response = await fetch(apiUrl)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data: ${response.statusText}`)
+      }
+
+      const json = await response.json()
+      const duneResults = json.result.rows.map((row: any) => ({
+        date: row.time.split(' ')[0],
+        price: row.price,
+      }))
+
+      setData(duneResults)
+    } catch (error: any) {
+      console.error('Error fetching data:', error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchDuneData()
+  }, [])
+
   return (
-    <LineChart width={600} height={300} data={data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Line
-        type="monotone"
-        dataKey="price"
-        stroke="#F0D85A"
-        activeDot={{ r: 8 }}
-      />
-    </LineChart>
+    <div>
+      {loading ? (
+        <p>Loading chart...</p>
+      ) : (
+        <LineChart width={600} height={300} data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="price"
+            stroke="#F0D85A"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
+      )}
+    </div>
   )
 }
 
