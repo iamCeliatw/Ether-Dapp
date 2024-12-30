@@ -134,7 +134,13 @@ const SimpleLineChart = () => {
             />
             <XAxis
               dataKey="time"
-              interval={timeRange === '5y' ? 'preserveStart' : 30}
+              interval={
+                timeRange === '5y'
+                  ? 'preserveStart'
+                  : timeRange === '1y'
+                  ? 30
+                  : 0
+              }
               padding={{ left: 10, right: 10 }}
               tick={{ fill: '#fff' }}
               tickFormatter={(value) => {
@@ -145,7 +151,7 @@ const SimpleLineChart = () => {
                   // 去掉年份，只顯示月份的英文縮寫
                   return dayjs(value).format('MMM')
                 } else {
-                  return dayjs(value).format('MM-DD')
+                  return dayjs(value).format('DD')
                 }
               }}
             />
