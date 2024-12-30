@@ -66,16 +66,19 @@ const EthToUsd: React.FC<EthToUsdProps> = ({ ethPrice = 0 }) => {
   }
 
   return (
-    <div className="p-4 bg-white shadow-md rounded-md">
-      <h2 className="text-lg font-bold mb-4">ETH to USD Converter</h2>
+    <div className="p-4 shadow-md rounded-md border border-gray-200 border-opacity-30">
+      <h2 className="text-lg font-bold mb-4 text-gray-300">
+        ETH to USD Converter
+      </h2>
       {loading ? (
         <p>Loading price...</p>
       ) : (
-        <p className="mb-4 text-sm text-gray-600">
-          Current ETH/USD: ${currentEthPrice.toFixed(2)}
+        <p className="text-gray-500 font-bold text-sm mb-4">
+          Current ETH/USD:
+          <span className="text-[#fff]">${currentEthPrice.toFixed(2)}</span>
         </p>
       )}
-      <div className="mb-4">
+      <div className="mb-4 p-3 rounded-md border border-gray-200 border-opacity-10">
         <label
           htmlFor="eth"
           className="block text-sm font-medium text-gray-700"
@@ -85,17 +88,18 @@ const EthToUsd: React.FC<EthToUsdProps> = ({ ethPrice = 0 }) => {
         <input
           id="eth"
           type="number"
-          step="0.01"
+          step="1"
           value={ethAmount}
           onChange={handleInputChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Enter amount"
+          className="placeholder-gray-500 caret-[#F0D85A] text-[#F0D85A] bg-transparent mt-1 block w-full p-2 rounded-md shadow-sm focus:outline-none sm:text-sm"
         />
       </div>
       <div>
-        <p className="text-sm font-medium text-gray-700">
+        <p className="text-sm font-bold text-gray-500">
           Equivalent in USD:{' '}
-          <span className="font-bold">
-            {ethAmount ? `${usdValue.toFixed(2)}` : '0.00'}
+          <span className="font-bold text-[#fff]">
+            {ethAmount ? ` $${usdValue.toFixed(2)}` : '0.00'}
           </span>
         </p>
       </div>

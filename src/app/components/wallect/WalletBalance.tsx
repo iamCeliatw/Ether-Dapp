@@ -18,9 +18,10 @@ const WalletBalance: React.FC<WalletBalanceProps> = ({ account }) => {
         return
       }
 
-      const provider = new ethers.BrowserProvider(window.ethereum)
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
       const balanceBigNumber = await provider.getBalance(account)
-      const balanceInEth = ethers.formatEther(balanceBigNumber)
+      const balanceInEth = ethers.utils.formatEther(balanceBigNumber)
+
       console.log('餘額:', balanceInEth, balanceBigNumber)
       setBalance(balanceInEth)
     } catch (error) {

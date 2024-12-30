@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const DUNE_API_KEY = process.env.NEXT_PUBLIC_DUNE_API_KEY
+const DUNE_API_KEY = process.env.NEXT_DUNE_API_KEY
 console.log('DUNE_API_KEY:', DUNE_API_KEY)
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -26,7 +26,11 @@ export async function GET(request: Request) {
 
     const data = await response.json()
     return NextResponse.json(data) // 返回查詢結果
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    } else {
+      return NextResponse.json({ error: 'Unknown error' }, { status: 500 })
+    }
   }
 }

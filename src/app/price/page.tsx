@@ -1,4 +1,3 @@
-// Layout.tsx
 'use client'
 import React, { useEffect } from 'react'
 import SimpleLineChart from '../components/price/LineChart'
@@ -13,13 +12,12 @@ const Layout: React.FC = () => {
   return (
     <div className="flex flex-col md:flex-row gap-4 p-4">
       {/* 左側折線圖 */}
-      <div className="flex-[3_3_0%] bg-gray-100 p-4 rounded-md shadow-md">
-        {/* <SimpleLineChart /> */}
+      <div className="flex-[7_7_0%] p-4 rounded-md shadow-md">
         {isClient && <SimpleLineChart />}
       </div>
 
       {/* 右側 ETH to USD 輸入區域 */}
-      <div className="flex-[2_2_0%]">
+      <div className="flex-[3_3_0%] p-4 rounded-md shadow-md">
         <EthToUsd ethPrice={1300} />
       </div>
     </div>
