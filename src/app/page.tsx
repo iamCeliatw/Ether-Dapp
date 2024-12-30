@@ -1,9 +1,22 @@
-import ConnectWallet from '../app/components/ConnectWallet'
+// app/page.tsx
+'use client'
 
-export default function Home() {
+import React from 'react'
+import ConnectWallet from './components/wallect/ConnectWallet'
+import WalletBalance from './components/wallect/WalletBalance'
+const HomePage: React.FC = () => {
+  const [account, setAccount] = React.useState<string | null>(null)
+
+  const handleAccountChange = (newAccount: string | null) => {
+    setAccount(newAccount)
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <ConnectWallet />
+    <div className="p-5">
+      <ConnectWallet onAccountChange={handleAccountChange} />
+      {account && <WalletBalance account={account || ''} />}
     </div>
   )
 }
+
+export default HomePage
