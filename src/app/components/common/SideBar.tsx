@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { FaWallet, FaUser, FaChartLine, FaCog } from 'react-icons/fa'
+import { FaWallet, FaUser } from 'react-icons/fa'
 import { AiOutlineLogout } from 'react-icons/ai'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
