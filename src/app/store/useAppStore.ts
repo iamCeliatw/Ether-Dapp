@@ -12,7 +12,7 @@ interface AppState {
 }
 // 定義 StorageValue 類型
 type StorageValue<T> = {
-  state: T // Zustand 的狀態類型
+  state: T
   version: number // Persist 的版本號
 }
 const customStorage = {
