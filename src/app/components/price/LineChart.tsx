@@ -19,8 +19,8 @@ type TimeRange = '1w' | '1m' | '1y' | '5y'
 const timeRanges = [
   { label: '5Y', value: '5y' as TimeRange },
   { label: '1Y', value: '1y' as TimeRange },
-  { label: '1M', value: '1m' as TimeRange },
-  { label: '1W', value: '1w' as TimeRange },
+  // { label: '1M', value: '1m' as TimeRange },
+  // { label: '1W', value: '1w' as TimeRange },
 ]
 
 function filterDataByRange(
@@ -98,8 +98,9 @@ const SimpleLineChart = () => {
   const handleRangeChange = (range: '1w' | '1m' | '1y' | '5y') => {
     setTimeRange(range)
   }
+  let lastYear = ''
   return (
-    <div style={{ width: '100%', height: '400px' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <div className="flex gap-4 mb-4">
         {/* 
           根據 state 高亮 / 變色或做出選中效果，可加條件判斷
@@ -124,8 +125,6 @@ const SimpleLineChart = () => {
         <p className="text-[#fff]">Loading chart...</p>
       ) : (
         <ResponsiveContainer width="100%" height="100%">
-          {/* 不要在這裡再指定 width, height = 600, 300，
-              因為已經被 ResponsiveContainer 設定了 */}
           <LineChart data={filteredData}>
             <CartesianGrid
               strokeDasharray="3 3"
@@ -146,9 +145,13 @@ const SimpleLineChart = () => {
               tickFormatter={(value) => {
                 if (timeRange === '5y') {
                   // 只顯示年份
-                  return dayjs(value).format('YYYY')
+                  const year = dayjs(value).format('YYYY')
+                  if (year !== lastYear) {
+                    lastYear = year
+                    return year
+                  }
+                  return ''
                 } else if (timeRange === '1y') {
-                  // 去掉年份，只顯示月份的英文縮寫
                   return dayjs(value).format('MMM')
                 } else {
                   return dayjs(value).format('DD')

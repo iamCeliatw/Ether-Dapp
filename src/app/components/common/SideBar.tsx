@@ -17,16 +17,16 @@ const menuItems = [
     title: 'Ethereum Price',
     href: '/price',
   },
-  {
-    icon: FaChartLine,
-    title: 'Chart',
-    href: '/chart',
-  },
-  {
-    icon: FaCog,
-    title: 'Settings',
-    href: '/settings',
-  },
+  // {
+  //   icon: FaChartLine,
+  //   title: 'Chart',
+  //   href: '/chart',
+  // },
+  // {
+  //   icon: FaCog,
+  //   title: 'Settings',
+  //   href: '/settings',
+  // },
 ]
 const Sidebar = () => {
   const pathname = usePathname()
